@@ -107,10 +107,11 @@ module.exports = [
         const dbQuery = db.from(function () {
           this.from('cities')
             .select('country as code')
+            .select('name')
             .sum('count as count')
             .sum('locations as locations')
             .count('name as cities')
-            .groupBy('country')
+            .groupBy(['country', 'name'])
             .as('countries');
         });
 

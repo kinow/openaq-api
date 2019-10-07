@@ -84,6 +84,20 @@ describe('/countries', function () {
     );
   });
 
+  it('can be ordered by name', done => {
+    request(
+      `${apiUrl}countries?order_by=name&sort=asc`,
+      (err, response, body) => {
+        expect(err).to.be.null;
+        expect(response.statusCode).to.equal(200);
+
+        const res = JSON.parse(body);
+        expect(res.results).to.deep.equal(orderBy(res.results, 'count', 'asc'));
+        done();
+      }
+    );
+  });
+
   it('can be ordered by multiple fields and directions', done => {
     request(
       `${apiUrl}countries?order_by[]=cities&order_by[]=locations&sort[]=asc&sort[]=desc`,
